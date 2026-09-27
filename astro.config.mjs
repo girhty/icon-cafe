@@ -7,9 +7,7 @@ export default defineConfig({
   output: 'static',
   site: 'https://icon-cafe.example.com',
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    tailwind(),
   ],
   compressHTML: true,
 });

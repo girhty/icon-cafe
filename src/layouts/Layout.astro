@@ -1,0 +1,215 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = 'ICON CAFE — specialty coffee house in Al-Jadriyah, Baghdad. Espresso, Spanish latte, sa7lab and cookies. Rated 4.2 on Google with 326 reviews.' } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#070707" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Great+Vibes&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'CafeOrCoffeeShop',
+      name: 'ICON CAFE',
+      image: 'https://lh3.googleusercontent.com/gps-cs-s/AHRPTWkJNNAu7VCHlU82nQQ-NGga4tAuGLkbpBW1L6BzYka0mY0FURmTOyenXj3ejGtQ0uow6h7hmirdGypaKYlmlBvUHneKmd26cWLRfoa2B2Rc3DWaBndBbKkpDrdrQQySHWluscA6=w408-h839-k-no',
+      telephone: '+964 782 223 4444',
+      address: {
+        '@type': 'PostalAddress',
+        streetAddress: 'Al-Jadriyah, opposite the Central Bank',
+        addressLocality: 'Baghdad',
+        addressCountry: 'IQ'
+      },
+      aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.2', reviewCount: '326' },
+      servesCuisine: 'Coffee',
+      sameAs: ['https://instagram.com/iconcafe.iq']
+    })} />
+  </head>
+  <body class="bg-espresso font-sans antialiased selection:bg-crema selection:text-espresso">
+    <slot />
+
+    <style is:global>
+      :root {
+        --espresso: #070707;
+        --bone: #f1f1ef;
+        --crema: #d58c3d;
+      }
+      * { -webkit-tap-highlight-color: transparent; }
+      html { background: #070707; }
+      body { overflow-x: hidden; }
+
+      .eyebrow {
+        font-family: 'Space Mono', monospace;
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .eyebrow .slash { letter-spacing: -0.08em; margin-right: 0.5rem; opacity: 0.6; }
+
+      .display {
+        font-family: 'Anton', Impact, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: -0.03em;
+        line-height: 0.92;
+        font-weight: 400;
+      }
+      .script { font-family: 'Great Vibes', cursive; letter-spacing: 0; text-transform: none; }
+
+      /* ---- Reveal: vertical clip mask rise ---- */
+      .mask { overflow: hidden; display: block; }
+      .mask > * {
+        display: block;
+        transform: translateY(108%);
+        transition: transform 1.15s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .in .mask > *, .mask.in > * { transform: translateY(0); }
+
+      [data-reveal] {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 1.05s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      [data-reveal].in { opacity: 1; transform: none; }
+
+      /* horizontal print-on wipe (script + wordmarks) */
+      .wipe { clip-path: inset(0 100% 0 0); transition: clip-path 1.4s cubic-bezier(0.16, 1, 0.3, 1); }
+      .wipe.in { clip-path: inset(0 0 0 0); }
+
+      .hairline-dark { background: rgba(255, 255, 255, 0.12); }
+      .hairline-light { background: rgba(7, 7, 7, 0.15); }
+
+      .link-underline { position: relative; }
+      .link-underline::after {
+        content: '';
+        position: absolute;
+        left: 0; bottom: -3px;
+        height: 1px; width: 100%;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .link-underline:hover::after, .link-underline:focus-visible::after { transform: scaleX(1); }
+
+      .tilt { transform-style: preserve-3d; will-change: transform; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+      .noise::before {
+        content: '';
+        position: absolute; inset: 0;
+        pointer-events: none;
+        opacity: 0.045;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+      }
+
+      a:focus-visible, button:focus-visible {
+        outline: 2px solid var(--crema);
+        outline-offset: 3px;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        * { animation: none !important; transition-duration: 0.01ms !important; }
+        [data-reveal] { opacity: 1 !important; transform: none !important; }
+        .mask > * { transform: none !important; }
+        .wipe { clip-path: none !important; }
+      }
+    </style>
+
+    <script is:inline>
+      // ---------- Reveal choreography ----------
+      const revealTargets = () =>
+        document.querySelectorAll('[data-reveal], .mask, .wipe, [data-reveal-group]');
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target;
+            const delay = parseFloat(el.getAttribute('data-delay') || '0');
+            setTimeout(() => el.classList.add('in'), delay * 1000);
+            io.unobserve(el);
+          });
+        },
+        { threshold: 0.18, rootMargin: '0px 0px -8% 0px' }
+      );
+      revealTargets().forEach((el) => io.observe(el));
+
+      // ---------- 3D cursor lean ----------
+      document.querySelectorAll('[data-tilt]').forEach((card) => {
+        const strength = parseFloat(card.getAttribute('data-tilt') || '8');
+        const inner = card.querySelector('.tilt') || card;
+        card.addEventListener('pointermove', (ev) => {
+          const r = card.getBoundingClientRect();
+          const px = (ev.clientX - r.left) / r.width - 0.5;
+          const py = (ev.clientY - r.top) / r.height - 0.5;
+          inner.style.transform =
+            'perspective(900px) rotateY(' + px * strength + 'deg) rotateX(' + -py * strength + 'deg) translateZ(0)';
+        });
+        card.addEventListener('pointerleave', () => {
+          inner.style.transform = 'perspective(900px) rotateY(0deg) rotateX(0deg)';
+        });
+      });
+
+      // ---------- Scroll parallax ----------
+      const parallaxEls = Array.from(document.querySelectorAll('[data-parallax]'));
+      // ---------- Rolling counters ----------
+      const rollers = Array.from(document.querySelectorAll('[data-roll]'));
+      const rolled = new WeakSet();
+
+      function runRoll(el) {
+        if (rolled.has(el)) return;
+        rolled.add(el);
+        const final = el.getAttribute('data-roll') || el.textContent || '';
+        const chars = '0123456789';
+        let ticks = 0;
+        const total = 14;
+        const id = setInterval(() => {
+          ticks++;
+          if (ticks >= total) {
+            clearInterval(id);
+            el.textContent = final;
+            return;
+          }
+          el.textContent = final
+            .split('')
+            .map((c) => (/[0-9]/.test(c) ? chars[Math.floor(Math.random() * 10)] : c))
+            .join('');
+        }, 45);
+      }
+
+      const rollIo = new IntersectionObserver(
+        (entries) => entries.forEach((e) => e.isIntersecting && runRoll(e.target)),
+        { threshold: 0.5 }
+      );
+      rollers.forEach((r) => rollIo.observe(r));
+
+      function onScroll() {
+        const vh = window.innerHeight;
+        parallaxEls.forEach((el) => {
+          const speed = parseFloat(el.getAttribute('data-parallax') || '0.1');
+          const r = el.getBoundingClientRect();
+          const progress = (r.top + r.height / 2 - vh / 2) / vh;
+          el.style.transform = 'translate3d(0,' + (-progress * speed * 100).toFixed(2) + 'px,0)';
+        });
+      }
+      window.addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
+      onScroll();
+    </script>
+  </body>
+</html>

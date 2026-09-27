@@ -1,0 +1,83 @@
+---
+import { site } from '../data/site';
+---
+<div
+  id="preloader"
+  data-theme="dark"
+  class="fixed inset-0 z-[100] bg-espresso noise overflow-hidden"
+  aria-hidden="true"
+>
+  <div class="absolute inset-0 opacity-70">
+    <div class="absolute -left-1/4 top-1/4 h-[70vh] w-[90vw] rounded-full blur-[120px] animate-liquid"
+      style="background:radial-gradient(closest-side, #6E3E22 0%, #2C1A11 45%, transparent 75%)"></div>
+  </div>
+
+  <div class="relative flex h-full flex-col justify-between px-5 py-6 sm:px-10 sm:py-10">
+    <p class="eyebrow text-white/50"><span class="slash">//</span>NOW BREWING</p>
+
+    <div class="flex items-center justify-center">
+      <span
+        id="pl-count"
+        class="display text-white text-[24vw] leading-none tabular-nums sm:text-[16vw]"
+        >000</span
+      >
+    </div>
+
+    <div class="flex items-end justify-between">
+      <div>
+        <p class="display text-2xl text-white sm:text-4xl">{site.brand.name}</p>
+        <p class="eyebrow mt-2 text-white/40">BAGHDAD / AL-JADRIYAH</p>
+      </div>
+
+      <!-- Outlined paper cup with liquid fill -->
+      <svg viewBox="0 0 80 100" class="h-24 w-20 sm:h-32 sm:w-28" role="img" aria-label="Filling coffee cup">
+        <defs>
+          <clipPath id="cupClip">
+            <path d="M14 26 H66 L60 92 Q59 96 55 96 H25 Q21 96 20 92 Z" />
+          </clipPath>
+          <linearGradient id="brew" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#D58C3D" />
+            <stop offset="45%" stop-color="#6E3E22" />
+            <stop offset="100%" stop-color="#110B07" />
+          </linearGradient>
+        </defs>
+        <g clip-path="url(#cupClip)">
+          <rect id="pl-liquid" x="0" y="100" width="80" height="100" fill="url(#brew)" />
+        </g>
+        <path d="M14 26 H66 L60 92 Q59 96 55 96 H25 Q21 96 20 92 Z" fill="none" stroke="#fff" stroke-opacity="0.75" stroke-width="1.4" />
+        <rect x="8" y="16" width="64" height="10" rx="3" fill="none" stroke="#fff" stroke-opacity="0.75" stroke-width="1.4" />
+        <line x1="20" y1="52" x2="60" y2="52" stroke="#fff" stroke-opacity="0.25" stroke-width="1" />
+      </svg>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    const count = document.getElementById('pl-count');
+    const liquid = document.getElementById('pl-liquid');
+    document.documentElement.style.overflow = 'hidden';
+    let v = 0;
+    const step = () => {
+      v += Math.random() * 6 + 2;
+      if (v > 100) v = 100;
+      count.textContent = String(Math.floor(v)).padStart(3, '0');
+      if (liquid) liquid.setAttribute('y', String(100 - v * 0.78));
+      if (v < 100) {
+        setTimeout(step, 55);
+      } else {
+        setTimeout(() => {
+          if (liquid) liquid.setAttribute('y', '100');
+          pre.style.transition = 'clip-path 1.1s cubic-bezier(0.76,0,0.24,1)';
+          pre.style.clipPath = 'inset(100% 0 0 0)';
+          document.documentElement.style.overflow = '';
+          document.body.dispatchEvent(new CustomEvent('icon:loaded'));
+          setTimeout(() => pre.remove(), 1300);
+        }, 420);
+      }
+    };
+    setTimeout(step, 250);
+  })();
+</script>

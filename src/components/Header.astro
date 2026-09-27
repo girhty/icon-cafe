@@ -1,0 +1,113 @@
+---
+import { site } from '../data/site';
+const { nav, brand } = site;
+---
+<header
+  id="chrome"
+  class="fixed inset-x-5 top-4 z-50 text-white transition-colors duration-500 sm:inset-x-10 sm:top-6"
+>
+  <nav aria-label="Primary" class="flex items-center justify-between gap-4">
+    <!-- Left: mono links -->
+    <ul class="hidden items-center gap-7 lg:flex">
+      {nav.map((l) => (
+        <li>
+          <a href={l.href} class="eyebrow link-underline opacity-80 transition-opacity hover:opacity-100">
+            {l.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Mobile toggle -->
+    <button
+      id="navToggle"
+      class="flex h-8 w-9 flex-col justify-center gap-[6px] lg:hidden"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="navDrawer"
+    >
+      <span class="block h-[1.5px] w-full bg-current transition-transform duration-300"></span>
+      <span class="block h-[1.5px] w-full bg-current transition-transform duration-300"></span>
+    </button>
+
+    <!-- Center wordmark -->
+    <a
+      href="#main"
+      class="display absolute left-1/2 top-0 -translate-x-1/2 text-base tracking-tightest sm:text-lg"
+      aria-label={brand.name + ' home'}
+    >
+      {brand.name}
+    </a>
+
+    <!-- Right: order CTA + status dot -->
+    <div class="flex items-center gap-3">
+      <span class="hidden items-center gap-2 sm:flex">
+        <span class="h-[7px] w-[7px] rounded-full bg-crema animate-pulseDot"></span>
+        <span class="eyebrow opacity-60">OPEN NOW</span>
+      </span>
+      <a href="#order" class="eyebrow link-underline font-bold">ORDER ONLINE</a>
+    </div>
+  </nav>
+</header>
+
+<!-- Full screen drawer -->
+<div
+  id="navDrawer"
+  class="fixed inset-0 z-40 hidden bg-espresso text-white noise"
+>
+  <div class="flex h-full flex-col justify-center gap-2 px-6">
+    {nav.map((l, i) => (
+      <a href={l.href} data-drawer-link class="group flex items-baseline gap-4 border-b border-white/10 py-4">
+        <span class="eyebrow text-white/35">{l.index}</span>
+        <span class="display text-4xl transition-transform duration-500 group-hover:translate-x-2 sm:text-6xl">{l.label}</span>
+      </a>
+    ))}
+    <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2">
+      <a href={brand.phoneHref} class="eyebrow text-white/70">{brand.phone}</a>
+      <a href={brand.instagram} class="eyebrow text-white/70">{brand.handle}</a>
+      <span class="eyebrow text-crema">★ {brand.rating} / {brand.reviews} GOOGLE REVIEWS</span>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    const chrome = document.getElementById('chrome');
+    const drawer = document.getElementById('navDrawer');
+    const toggle = document.getElementById('navToggle');
+
+    // Dynamic theme inversion based on the section under the chrome centerline
+    const sections = () => Array.from(document.querySelectorAll('[data-theme]'));
+    function invert() {
+      if (!chrome) return;
+      const line = chrome.getBoundingClientRect().top + chrome.offsetHeight / 2 + 6;
+      let theme = 'dark';
+      sections().forEach((s) => {
+        const r = s.getBoundingClientRect();
+        if (r.top <= line && r.bottom >= line) theme = s.getAttribute('data-theme') || 'dark';
+      });
+      if (drawer && !drawer.classList.contains('hidden')) theme = 'dark';
+      chrome.classList.toggle('text-white', theme === 'dark');
+      chrome.classList.toggle('text-espresso', theme === 'light');
+    }
+    window.addEventListener('scroll', () => requestAnimationFrame(invert), { passive: true });
+    window.addEventListener('resize', invert);
+    invert();
+
+    let open = false;
+    function setOpen(state) {
+      open = state;
+      drawer.classList.toggle('hidden', !state);
+      toggle.setAttribute('aria-expanded', String(state));
+      toggle.setAttribute('aria-label', state ? 'Close navigation menu' : 'Open navigation menu');
+      document.documentElement.style.overflow = state ? 'hidden' : '';
+      const bars = toggle.querySelectorAll('span');
+      bars[0].style.transform = state ? 'translateY(4px) rotate(45deg)' : '';
+      bars[1].style.transform = state ? 'translateY(-4px) rotate(-45deg)' : '';
+      invert();
+    }
+    toggle && toggle.addEventListener('click', () => setOpen(!open));
+    drawer && drawer.querySelectorAll('[data-drawer-link]').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => e.key === 'Escape' && open && setOpen(false));
+  })();
+</script>

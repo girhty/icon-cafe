@@ -1,0 +1,35 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Preloader from '../components/Preloader.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import MenuSection from '../components/MenuSection.astro';
+import Locations from '../components/Locations.astro';
+import Reviews from '../components/Reviews.astro';
+import InstagramFeed from '../components/InstagramFeed.astro';
+import Philosophy from '../components/Philosophy.astro';
+import OrderSection from '../components/OrderSection.astro';
+import Footer from '../components/Footer.astro';
+import Marquee from '../components/Marquee.astro';
+---
+
+<Layout
+  title="ICON CAFE — Specialty Coffee House / Al-Jadriyah, Baghdad"
+  description="ICON CAFE is a specialty coffee house in Al-Jadriyah, Baghdad — opposite the Central Bank. Espresso, Spanish latte, zero-sugar hibiscus, sa7lab & cookies. ⭐ 4.2 on Google (326 reviews)."
+>
+  <Preloader />
+  <Header />
+
+  <main id="main">
+    <Hero />
+    <Marquee />
+    <MenuSection />
+    <Locations />
+    <Reviews />
+    <InstagramFeed />
+    <Philosophy />
+    <OrderSection />
+  </main>
+
+  <Footer />
+</Layout>

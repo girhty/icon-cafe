@@ -1,0 +1,60 @@
+---
+import { site } from '../data/site';
+const { philosophy } = site;
+const beans = Array.from({ length: 14 }, (_, i) => ({
+  left: (i * 7.3 + 4) % 96,
+  top: (i * 13.7 + 8) % 88,
+  size: 8 + ((i * 5) % 16),
+  delay: -(i * 1.7),
+  dur: 14 + ((i * 3) % 10),
+}));
+---
+<section id="story" data-theme="dark" class="relative flex min-h-[100svh] flex-col overflow-hidden bg-espresso noise" aria-labelledby="story-title">
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute left-[-10%] top-1/4 h-[70vh] w-[70vw] rounded-full blur-[150px] animate-liquid"
+      style="background:radial-gradient(closest-side,#6E3E22 0%,#110B07 55%,transparent 80%)"></div>
+    <div class="absolute right-0 bottom-0 h-[50vh] w-[50vw] rounded-full blur-[140px] animate-liquid"
+      style="animation-delay:-10s;background:radial-gradient(closest-side,#C69B6E 0%,transparent 72%)"></div>
+    <div class="absolute inset-0" style="background:linear-gradient(180deg,rgba(7,7,7,0.88),rgba(7,7,7,0.25) 45%,rgba(7,7,7,0.9))"></div>
+  </div>
+
+  <!-- Drifting beans -->
+  <div class="pointer-events-none absolute inset-0" aria-hidden="true">
+    {beans.map((b) => (
+      <span
+        class="absolute rounded-[50%] animate-drift"
+        style={`left:${b.left}%;top:${b.top}%;width:${b.size}px;height:${b.size * 1.4}px;background:linear-gradient(135deg,#6E3E22,#2C1A11);box-shadow:inset 0 0 0 1px rgba(255,255,255,0.07);animation-duration:${b.dur}s;animation-delay:${b.delay}s;opacity:${0.35 + (b.size % 5) / 12}`}
+      ></span>
+    ))}
+  </div>
+
+  <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col justify-between px-5 py-24 sm:px-10 sm:py-28">
+    <h2 id="story-title" class="max-w-5xl text-white">
+      {philosophy.headline.map((line, i) => (
+        <span class="mask"><span class="display block text-[10vw] leading-[0.94] sm:text-[6vw] lg:text-[4.2rem]" data-delay={0.1 * i}>{line}</span></span>
+      ))}
+    </h2>
+
+    <!-- Floating cup -->
+    <div class="pointer-events-none relative my-14 flex justify-center" aria-hidden="true">
+      <img
+        src={philosophy.cup}
+        alt=""
+        loading="lazy"
+        referrerpolicy="no-referrer"
+        data-parallax="0.12"
+        class="h-56 w-40 animate-float rounded-[2px] border border-white/10 object-cover shadow-glass sm:h-72 sm:w-52"
+      />
+    </div>
+
+    <div class="grid gap-10 border-t border-white/10 pt-8 lg:grid-cols-3">
+      <p class="eyebrow text-white/50" data-reveal><span class="slash">//</span>{philosophy.eyebrow}</p>
+      <p class="text-sm leading-relaxed text-white/60" data-reveal data-delay="0.1">{philosophy.lede}</p>
+      <ul class="space-y-1 lg:text-right" data-reveal data-delay="0.2">
+        {philosophy.claims.map((c) => (
+          <li class="eyebrow text-white">{c}</li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

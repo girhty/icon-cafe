@@ -1,0 +1,73 @@
+---
+import { site } from '../data/site';
+const { brand, footer, locations } = site;
+const year = new Date().getFullYear();
+---
+<footer data-theme="dark" class="relative overflow-hidden bg-espresso pt-20 noise" aria-label="Site footer">
+  <svg class="pointer-events-none absolute -right-32 -top-20 h-[34rem] w-[34rem] text-white/[0.04]" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+    <path d="M40 300C40 160 140 60 240 100c90 36 60 170-30 170-70 0-100-60-60-110 40-50 130-40 170 20" stroke="currentColor" stroke-width="34" stroke-linecap="round" />
+  </svg>
+
+  <div class="relative mx-auto w-full max-w-[1440px] px-5 sm:px-10">
+    <!-- Top row -->
+    <div class="grid gap-12 pb-14 lg:grid-cols-[1fr_1.4fr]">
+      <div>
+        <p class="display text-4xl text-white sm:text-6xl" data-reveal>{brand.name}</p>
+        <p class="eyebrow mt-4 text-white/55" data-reveal data-delay="0.1">{brand.tagline}</p>
+        <p class="mt-6 flex items-center gap-2" data-reveal data-delay="0.15">
+          <span class="text-crema">★</span>
+          <span class="eyebrow text-white/70">{brand.rating} ON GOOGLE / {brand.reviews} REVIEWS</span>
+        </p>
+      </div>
+
+      <nav class="grid grid-cols-2 gap-8 sm:grid-cols-4" aria-label="Footer navigation">
+        {footer.columns.map((col, i) => (
+          <div data-reveal data-delay={0.06 * i}>
+            <h3 class="eyebrow text-white/35">{col.heading}</h3>
+            <ul class="mt-4 space-y-2">
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} class="eyebrow link-underline text-white/80 hover:text-white">{l.label}</a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
+    </div>
+
+    <!-- Middle row -->
+    <div class="border-t border-white/10 py-10">
+      <p class="eyebrow flex items-center gap-2 text-white/70" data-reveal>
+        <span class="h-[7px] w-[7px] rounded-full bg-crema animate-pulseDot"></span>OUR LOCATIONS
+      </p>
+      <div class="mt-6 flex flex-col gap-6 sm:flex-row sm:items-start sm:gap-0">
+        {locations.branches.map((b, i) => (
+          <address class={'not-italic sm:px-6 ' + (i === 0 ? 'sm:pl-0' : '') + ' sm:border-l sm:border-white/10'} data-reveal data-delay={0.06 * i}>
+            <p class="eyebrow text-white">{b.name}</p>
+            {b.lines.map((line) => (<p class="eyebrow mt-1 text-white/45">{line}</p>))}
+          </address>
+        ))}
+        <div class="sm:border-l sm:border-white/10 sm:px-6" data-reveal data-delay="0.2">
+          <p class="eyebrow text-white">{brand.hours[0]}</p>
+          <p class="eyebrow mt-1 text-white/45">{brand.hours[1]}</p>
+          <a href={brand.phoneHref} class="eyebrow link-underline mt-1 block text-white/45">{brand.phone}</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Legal bar -->
+    <div class="flex flex-col items-start gap-4 border-t border-white/10 py-8 sm:flex-row sm:items-center sm:justify-between">
+      <p class="eyebrow text-white/40">© {year} ICON CAFE COFFEE HOUSE. BAGHDAD.</p>
+      <div class="flex items-center gap-5">
+        <a href={brand.instagram} target="_blank" rel="noopener" class="eyebrow link-underline text-white/70">INSTAGRAM</a>
+        <span class="eyebrow text-white/25">&amp;</span>
+        <a href={brand.instagram} target="_blank" rel="noopener" class="eyebrow link-underline text-white/70">TIKTOK</a>
+      </div>
+      <div class="flex items-center gap-5">
+        <a href="#main" class="eyebrow link-underline text-white/40">PRIVACY POLICY</a>
+        <a href="#main" class="eyebrow link-underline text-white/40">TERMS OF USE</a>
+      </div>
+    </div>
+  </div>
+</footer>

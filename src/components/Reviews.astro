@@ -1,0 +1,62 @@
+---
+import { site } from '../data/site';
+const { reviews, brand, gallery } = site;
+---
+<section id="reviews" data-theme="dark" class="relative overflow-hidden bg-espresso py-24 noise sm:py-32" aria-labelledby="rev-title">
+  <div class="pointer-events-none absolute inset-0">
+    <div class="absolute left-1/3 top-0 h-[60vh] w-[60vw] rounded-full blur-[150px] animate-liquid"
+      style="background:radial-gradient(closest-side,#2C1A11 0%,transparent 75%)"></div>
+  </div>
+
+  <div class="relative mx-auto w-full max-w-[1440px] px-5 sm:px-10">
+    <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div>
+        <p class="eyebrow text-white/50" data-reveal><span class="slash">//</span>{reviews.eyebrow}</p>
+        <h2 id="rev-title" class="mt-4 text-white">
+          <span class="mask"><span class="display block text-[12vw] leading-[0.9] sm:text-[7vw] lg:text-[4.8rem]">{reviews.heading[0]}</span></span>
+          <span class="mask"><span class="display block text-[12vw] leading-[0.9] sm:text-[7vw] lg:text-[4.8rem]" data-delay="0.1">{reviews.heading[1]}</span></span>
+        </h2>
+      </div>
+
+      <div class="flex items-center gap-5 border border-white/15 px-5 py-4" data-reveal>
+        <span class="display text-5xl text-crema tabular-nums" data-roll={brand.rating.toFixed(1)}>{brand.rating.toFixed(1)}</span>
+        <div>
+          <p class="text-crema" aria-hidden="true">★★★★<span class="text-white/25">★</span></p>
+          <p class="eyebrow mt-1 text-white/55">{brand.reviews} GOOGLE REVIEWS</p>
+        </div>
+      </div>
+    </div>
+
+    <ul class="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {reviews.items.map((r, i) => (
+        <li data-reveal data-delay={0.08 * i}>
+          <figure class="flex h-full flex-col justify-between border border-white/12 bg-white/[0.03] p-6 backdrop-blur-sm transition-colors duration-500 hover:border-crema/60">
+            <div>
+              <p class="eyebrow text-crema" aria-label={r.rating + ' out of 5 stars'}>{'★'.repeat(r.rating)}<span class="text-white/20">{'★'.repeat(5 - r.rating)}</span></p>
+              <blockquote class="mt-5 text-sm leading-relaxed text-white/70">“{r.text}”</blockquote>
+            </div>
+            <figcaption class="mt-8 border-t border-white/10 pt-4">
+              <p class="eyebrow text-white">{r.author}</p>
+              <p class="eyebrow mt-1 text-white/35">VERIFIED GOOGLE GUEST</p>
+            </figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+
+    <!-- Atmosphere strip -->
+    <ul class="mt-6 grid grid-cols-2 gap-5 lg:grid-cols-4">
+      {gallery.map((g, i) => (
+        <li class="overflow-hidden border border-white/10" data-reveal data-delay={0.06 * i}>
+          <img
+            src={g}
+            alt="Interior and seating atmosphere at Icon Cafe, Baghdad"
+            loading="lazy"
+            referrerpolicy="no-referrer"
+            class="h-40 w-full object-cover grayscale transition-all duration-700 hover:grayscale-0 sm:h-48"
+          />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

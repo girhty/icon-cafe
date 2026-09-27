@@ -1,0 +1,114 @@
+---
+import { site } from '../data/site';
+const { hero, brand } = site;
+---
+<section
+  id="hero"
+  data-theme="dark"
+  class="relative flex min-h-[100svh] flex-col overflow-hidden bg-espresso noise"
+  aria-label="Introduction"
+>
+  <!-- Ambient liquid gradient field -->
+  <div class="pointer-events-none absolute inset-0 z-0">
+    <div
+      class="absolute -bottom-1/4 left-[-10%] h-[85vh] w-[80vw] rounded-full blur-[130px] animate-liquid"
+      style="background:radial-gradient(closest-side,#6E3E22 0%,#2C1A11 50%,transparent 78%)"
+    ></div>
+    <div
+      class="absolute right-[-5%] top-[5%] h-[60vh] w-[55vw] rounded-full blur-[140px] animate-liquid"
+      style="animation-delay:-8s;background:radial-gradient(closest-side,#C69B6E 0%,#110B07 55%,transparent 80%)"
+    ></div>
+  </div>
+  <!-- Readability scrim -->
+  <div
+    class="pointer-events-none absolute inset-0 z-[1]"
+    style="background:linear-gradient(90deg, rgba(7,7,7,0.86) 0%, rgba(7,7,7,0.6) 35%, transparent 62%)"
+  ></div>
+
+  <div class="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-5 pb-6 pt-28 sm:px-10 sm:pb-10 sm:pt-32">
+    <div class="grid flex-1 items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">
+      <!-- Copy stack -->
+      <div>
+        <p class="eyebrow text-white/55" data-reveal><span class="slash">//</span>{hero.eyebrow}</p>
+
+        <h1 class="mt-5 text-white">
+          <span class="mask"><span class="display block text-[13vw] leading-[0.9] sm:text-[8.5vw] lg:text-[5.4rem]">{hero.headline[0]}</span></span>
+          <span class="relative mt-1 block">
+            <span class="mask"><span class="display block text-[13vw] leading-[0.9] sm:text-[8.5vw] lg:text-[5.4rem]" data-delay="0.12">{hero.headline[1]}</span></span>
+            <span
+              class="script wipe absolute -bottom-2 left-[26%] text-crema text-[13vw] leading-none sm:text-[8vw] lg:text-[5.5rem]"
+              data-delay="0.7"
+              aria-hidden="true">{hero.script}</span
+            >
+          </span>
+          <span class="sr-only">{hero.script}</span>
+        </h1>
+
+        <p class="mt-10 max-w-md text-[0.72rem] uppercase leading-relaxed tracking-[0.14em] text-white/55 sm:mt-14" data-reveal data-delay="0.25">
+          {hero.lede}
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-6" data-reveal data-delay="0.35">
+          <a href="#menu" class="eyebrow link-underline font-bold text-white">EXPLORE MENU →</a>
+          <span class="flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5">
+            <span class="text-crema">★</span>
+            <span class="eyebrow text-white/80">{brand.rating} ON GOOGLE</span>
+            <span class="eyebrow text-white/35">/ {brand.reviews} REVIEWS</span>
+          </span>
+        </div>
+      </div>
+
+      <!-- Product showcase -->
+      <div class="relative" data-tilt="9">
+        <div class="tilt group relative mx-auto aspect-[4/5] w-full max-w-[26rem] cursor-grab">
+          <div class="absolute inset-0 -rotate-2 rounded-[2px] border border-white/10"></div>
+          <img
+            src={hero.image}
+            alt="Icon Cafe signature cup and roasted coffee served in Al-Jadriyah, Baghdad"
+            loading="eager"
+            referrerpolicy="no-referrer"
+            class="h-full w-full rounded-[2px] object-cover grayscale-[0.12] contrast-[1.05] transition-transform duration-700 group-hover:scale-[1.03]"
+          />
+          <div class="pointer-events-none absolute inset-0" style="background:linear-gradient(180deg,rgba(7,7,7,0.25),transparent 40%,rgba(7,7,7,0.55))"></div>
+
+          <!-- Hover spec cards -->
+          <div class="pointer-events-none absolute left-3 top-4 w-[13.5rem] translate-y-3 rounded-[2px] border border-white/15 bg-white/[0.07] p-4 opacity-0 backdrop-blur-md transition-all duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+            <p class="eyebrow text-white/50"><span class="slash">//</span>{hero.bagCard.eyebrow}</p>
+            <p class="display mt-2 text-lg text-white">{hero.bagCard.name}</p>
+            <p class="eyebrow mt-1 text-crema">{hero.bagCard.price}</p>
+            <p class="eyebrow mt-3 leading-5 text-white/40">{hero.bagCard.meta.join(' • ')}</p>
+          </div>
+
+          <div class="pointer-events-none absolute bottom-4 right-3 w-[13.5rem] translate-y-3 rounded-[2px] border border-white/15 bg-white/[0.07] p-4 opacity-0 backdrop-blur-md transition-all delay-100 duration-500 group-hover:translate-y-0 group-hover:opacity-100">
+            <p class="eyebrow text-white/50"><span class="slash">//</span>{hero.cupCard.eyebrow}</p>
+            <p class="display mt-2 text-lg text-white">{hero.cupCard.name}</p>
+            <p class="eyebrow mt-1 text-crema">{hero.cupCard.price}</p>
+            <p class="eyebrow mt-3 leading-5 text-white/40">{hero.cupCard.meta.join(' • ')}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom info bar -->
+    <div class="relative z-10 mt-10 grid grid-cols-1 gap-y-6 border-t border-white/10 pt-6 sm:grid-cols-3 sm:gap-x-6">
+      <div class="sm:border-r sm:border-white/10 sm:pr-6" data-reveal>
+        <p class="eyebrow text-white/35">HOURS</p>
+        <p class="eyebrow mt-2 text-white">{brand.hours[0]}</p>
+        <p class="eyebrow text-white/60 tabular-nums" data-roll={brand.hours[1]}>{brand.hours[1]}</p>
+      </div>
+      <div class="sm:border-r sm:border-white/10 sm:pr-6" data-reveal data-delay="0.1">
+        <p class="eyebrow text-white/35">FIND US</p>
+        <p class="eyebrow mt-2 text-white">{brand.address[0]}</p>
+        <p class="eyebrow text-white/60">{brand.address[1]}</p>
+      </div>
+      <div data-reveal data-delay="0.2">
+        <p class="eyebrow text-white/35">SOCIAL</p>
+        <div class="mt-2 flex flex-wrap items-center gap-x-5 gap-y-1">
+          <a href={brand.instagram} class="eyebrow link-underline text-white">INSTAGRAM</a>
+          <a href="#feed" class="eyebrow link-underline text-white/60">{brand.followers} FOLLOWERS</a>
+          <a href={brand.phoneHref} class="eyebrow link-underline text-white/60">{brand.phone}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

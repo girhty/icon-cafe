@@ -1,0 +1,26 @@
+---
+const words = [
+  'ESPRESSO',
+  'SPANISH LATTE',
+  'SA7LAB',
+  'HOT CHOCOLATE',
+  'ZERO SUGAR HIBISCUS',
+  'COOKIES',
+  'GREEN APPLE SMOOTHIE',
+  'V60',
+];
+---
+<section data-theme="dark" class="relative overflow-hidden border-y border-white/10 bg-espresso py-4" aria-hidden="true">
+  <div class="flex w-max animate-marquee items-center gap-10">
+    {[0, 1].map(() => (
+      <div class="flex items-center gap-10">
+        {words.map((w) => (
+          <span class="display flex items-center gap-10 text-xl text-white/80 sm:text-2xl">
+            {w}
+            <span class="text-crema text-xs">●</span>
+          </span>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>

@@ -1,0 +1,68 @@
+---
+import { site } from '../data/site';
+const { menu } = site;
+---
+<section id="menu" data-theme="light" class="relative overflow-hidden bg-bone py-24 sm:py-32" aria-labelledby="menu-title">
+  <!-- Oversized brand swirl texture -->
+  <svg class="pointer-events-none absolute -right-24 top-10 h-[46rem] w-[46rem] text-oat" viewBox="0 0 400 400" fill="none" aria-hidden="true">
+    <path d="M40 300C40 160 140 60 240 100c90 36 60 170-30 170-70 0-100-60-60-110 40-50 130-40 170 20" stroke="currentColor" stroke-width="34" stroke-linecap="round" />
+  </svg>
+
+  <div class="relative mx-auto w-full max-w-[1440px] px-5 sm:px-10">
+    <div class="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-end">
+      <div>
+        <p class="eyebrow text-espresso/50" data-reveal><span class="slash">//</span>{menu.eyebrow}</p>
+        <h2 id="menu-title" class="mt-4 text-espresso">
+          <span class="mask"><span class="display block text-[13vw] leading-[0.9] sm:text-[8vw] lg:text-[5.2rem]">{menu.heading[0]}</span></span>
+          <span class="mask"><span class="display block text-[13vw] leading-[0.9] sm:text-[8vw] lg:text-[5.2rem]" data-delay="0.12">{menu.heading[1]}</span></span>
+        </h2>
+        <p class="mt-6 max-w-lg text-sm leading-relaxed text-espresso/50" data-reveal data-delay="0.2">{menu.lede}</p>
+      </div>
+
+      <!-- Receipt easter egg -->
+      <div class="group relative flex justify-start lg:justify-end">
+        <a href="#order" class="eyebrow link-underline relative z-10 font-bold text-espresso">VIEW FULL MENU →</a>
+        <div class="pointer-events-none absolute -bottom-6 right-0 z-0 w-40 translate-y-full rotate-[8deg] bg-white p-3 opacity-0 shadow-glass transition-all duration-700 group-hover:-translate-y-2 group-hover:opacity-100">
+          <p class="display text-center text-sm text-espresso">ICON CAFE</p>
+          <p class="eyebrow mt-1 text-center text-[0.55rem] text-espresso/50">AL-JADRIYAH / BAGHDAD</p>
+          <div class="my-2 border-t border-dashed border-espresso/30"></div>
+          {menu.items.map((i) => (
+            <p class="eyebrow flex justify-between text-[0.55rem] text-espresso/70"><span>{i.name}</span><span>{i.price.replace(' IQD', '')}</span></p>
+          ))}
+          <div class="my-2 border-t border-dashed border-espresso/30"></div>
+          <p class="eyebrow text-center text-[0.55rem] text-espresso/50">THANK YOU • SEE YOU SOON</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product row -->
+    <ul class="mt-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5">
+      {menu.items.map((item, idx) => (
+        <li data-tilt="7" data-reveal data-delay={0.08 * idx}>
+          <article class="tilt group relative flex h-full flex-col justify-between border border-espresso bg-bone/40 p-5 pt-6">
+            <div class="flex items-start justify-between">
+              <span class="eyebrow text-espresso/35">{item.index}</span>
+              <span class="eyebrow text-espresso/35">{item.note}</span>
+            </div>
+
+            <div class="relative my-6 aspect-square overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.name + ' at Icon Cafe Baghdad'}
+                loading="lazy"
+                referrerpolicy="no-referrer"
+                data-parallax="0.06"
+                class="h-full w-full object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.07]"
+              />
+            </div>
+
+            <div class="flex items-end justify-between border-t border-espresso/20 pt-4">
+              <h3 class="display text-xl text-espresso sm:text-2xl">{item.name}</h3>
+              <span class="eyebrow tabular-nums text-espresso/70" data-roll={item.price}>{item.price}</span>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
